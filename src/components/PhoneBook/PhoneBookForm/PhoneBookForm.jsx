@@ -1,8 +1,7 @@
 import { nanoid } from 'nanoid';
 import { useMemo, useState, memo, useCallback } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { selectFilteredContacts } from '../../../redux/contacts/contacts-selectors';
+import { useDispatch } from 'react-redux';
 
 import { addContact } from '../../../redux/contacts/contacts-operations';
 
