@@ -1,14 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { persistStore } from 'redux-persist';
 
-import persistedReducer from './rootReduser';
+import rootReduser from './rootReduser';
 
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      ignoredPaths: ['register'],
-    }),
+  reducer: rootReduser,
 });
-
-export const persistor = persistStore(store);

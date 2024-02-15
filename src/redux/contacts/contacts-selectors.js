@@ -1,13 +1,15 @@
-export const getAllContacts = store => store.contacts;
+export const selectAllContacts = store => store.contacts.items;
 
-export const getFilteredContacts = store => {
+export const selectFilteredContacts = store => {
   const { contacts, filter } = store;
+  const { items, isLoading, error } = contacts;
+
   if (!filter) {
     return contacts;
   }
   const normalizedFilter = filter.toLowerCase();
 
-  const filteredContacts = contacts.filter(({ name, phone }) => {
+  const filteredContacts = items.filter(({ name, phone }) => {
     const normalizedName = name.toLowerCase();
     const normalizedPhone = phone.toLowerCase();
 
@@ -17,5 +19,9 @@ export const getFilteredContacts = store => {
     );
   });
 
-  return filteredContacts;
+  return {
+    items: filteredContacts,
+    isLoading,
+    error,
+  };
 };

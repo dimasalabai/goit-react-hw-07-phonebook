@@ -1,5 +1,11 @@
 import { nanoid } from 'nanoid';
 import { useMemo, useState, memo, useCallback } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { selectFilteredContacts } from '../../../redux/contacts/contacts-selectors';
+
+import { addContact } from '../../../redux/contacts/contacts-operations';
+
 import styles from './phone-book-form.module.css';
 
 const INITIAL_STATE = {
@@ -7,8 +13,21 @@ const INITIAL_STATE = {
   phone: '',
 };
 
-const PhoneBookForm = ({ onSubmit }) => {
+const PhoneBookForm = () => {
   const [state, setState] = useState({ ...INITIAL_STATE });
+
+  // ============================================
+
+  const dispatch = useDispatch();
+
+  const onAddСontact = data => {
+    // data - state форми
+
+    dispatch(addContact(data));
+
+    resetForm();
+  };
+  // ============================================
 
   const handleChange = useCallback(({ target }) => {
     const { name, value } = target;
@@ -18,10 +37,14 @@ const PhoneBookForm = ({ onSubmit }) => {
     }));
   }, []);
 
+  const resetForm = () => {
+    setState({ ...INITIAL_STATE });
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit({ ...state });
-    setState({ ...INITIAL_STATE });
+
+    onAddСontact({ ...state });
   };
 
   const contactsName = useMemo(() => nanoid(), []);
